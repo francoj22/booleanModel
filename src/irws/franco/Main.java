@@ -7,36 +7,78 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
-    //tokenization
-    // split the sentectes removing the stopwords
-    //
+
     /**
      * @document : Document to be evaluate
+     *
      */
     public static ArrayList<String>  tokenization(String document){
         StringTokenizer st= new StringTokenizer(document);
         ArrayList<String>wordsPerDoc=new ArrayList<>();
         while (st.hasMoreTokens()){
-            wordsPerDoc.add(st.nextToken());
+
+            String token= removingWords(st.nextToken().toLowerCase());
+            if (!token.isEmpty())
+                wordsPerDoc.add(token);
         }
         return wordsPerDoc;
 
     }
 
+    /**
+     *
+     * @param token
+     * @return
+     */
+
+    public static String removingWords(String token){
+        try{
+
+
+            String tempToken=token;
+            Pattern regex = Pattern.compile("[a-z][a-z]+[1-9]=");
+            Matcher matcher = regex.matcher(tempToken);
+            if (matcher.find()) {
+                token = tempToken.replace(matcher.group(), "");
+
+            }
+            return token;
+
+        }catch (Exception s){
+            System.out.println(s);
+
+        }
+        return token.toLowerCase();
+
+    }
+
+
     public static void main(String[] args) throws IOException{
         BufferedReader bReader= new BufferedReader(new FileReader(new File("C:/Users/Franco/IdeaProjects/booleanModel/src/irws/franco/Documents.txt")));
-        String inputLine;
+        BufferedReader bStopWords= new BufferedReader(new FileReader(new File("C:/Users/Franco/IdeaProjects/booleanModel/src/irws/franco/StopWords.txt")));
+        String binputLineReader,inputbLineStopWords;
         int counterDoc=0;
         LinkedHashMap dictionary =new LinkedHashMap();
-        while ((inputLine = bReader.readLine()) != null){
+        ArrayList<String>wordsPerDoc,stopWordsList;
+        //Reading the document to be evaluates
+        while ((binputLineReader = bReader.readLine()) != null){
 
-            ArrayList<String>wordsPerDoc = tokenization(inputLine);
+             wordsPerDoc= tokenization(binputLineReader);
             for(String temp:wordsPerDoc)
                 System.out.println(temp);
 
 
+        }
+        //Stops Words to be evaluates
+        while ((inputbLineStopWords = bStopWords.readLine()) != null){
+
+            stopWordsList = tokenization(inputbLineStopWords);
+            for(String temp:stopWordsList)
+                System.out.println(temp);
 
         }
 
