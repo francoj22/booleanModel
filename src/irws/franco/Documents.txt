@@ -1,0 +1,6 @@
+Doc1= English Language and Written Rules.
+Doc2= Semantic Indexing made easy.
+Doc3= Information Retrieval is fun!
+Doc4=Writing English essays and academic papers for beginners.
+Doc5= Retrieving Information from semantically diverse documents.
+Doc6= Learn how to Index written textbooks.
